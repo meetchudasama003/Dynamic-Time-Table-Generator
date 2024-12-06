@@ -1,0 +1,44 @@
+﻿@model Dynamic_Time_Table_Generator.Models.TimeTableViewModel
+
+@{
+    ViewData["Title"] = "Enter Subject Hours";
+    Layout = "_Layout";
+}
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Enter Subject Hours</h2>
+
+    <form asp-action="GenerateTimeTable" method="post" id="subjectHoursForm">
+        <input type="hidden" id="TotalSubjects" name="TotalSubjects" value="@Model.TotalSubjects" />
+        <input type="hidden" id="TotalHours" name="TotalHours" value="@Model.TotalHours" />
+        <input type="hidden" id="NoOfSubjectsPerDay" name="NoOfSubjectsPerDay" value="@Model.NoOfSubjectsPerDay" />
+        <input type="hidden" id="NoOfWorkingDays" name="NoOfWorkingDays" value="@Model.NoOfWorkingDays" />
+        @for (int i = 0; i < Model.TotalSubjects; i++)
+        {
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="SubjectName_@i">Subject @(i + 1):</label>
+                        <input type="text" class="form-control" id="SubjectName_@i" name="Subjects[@i].Name" required />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="SubjectHours_@i">Total Hours for Subject @(i + 1):</label>
+                        <input type="number" class="form-control" id="SubjectHours_@i" name="Subjects[@i].Hours" required min="1" max="@Model.TotalHours" />
+                        <span class="error-message" id="error_@i" style="color:red; display:none;">Invalid number of hours.</span>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary" id="generateBtn">Generate</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/SubjectHourInput.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,30 @@
+﻿@model Dynamic_Time_Table_Generator.Models.TimeTableViewModel
+
+@{
+    ViewData["Title"] = "Generated Time Table";
+    Layout = "_Layout";
+}
+
+<h2 class="text-center mb-4">Time Table</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            @for (int i = 0; i < Model.NoOfWorkingDays; i++)
+            {
+                <th>Day @(i + 1)</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.NoOfSubjectsPerDay; i++)
+        {
+            <tr>
+                @for (int j = 0; j < Model.NoOfWorkingDays; j++)
+                {
+                    <td>@Model.Timetable[i][j]</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
